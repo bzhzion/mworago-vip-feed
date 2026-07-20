@@ -80,8 +80,15 @@ function kpopify_vip_feed_output() {
     echo '<?xml version="1.0" encoding="UTF-8"?>';
     echo '<rss version="2.0"><channel><title>Kpopify VIP</title>';
 
+    // Retire les caractères Unicode de contrôle/formatage (override RTL, zero-width...)
+    // avant échappement HTML — esc_html() ne protège pas contre le spoofing visuel.
+    $strip_unicode_controls = static function ( $value ) {
+        $stripped = preg_replace( '/[\p{Cc}\p{Cf}]/u', '', (string) $value );
+        return null === $stripped ? $value : $stripped;
+    };
+
     foreach ( $posts as $post ) {
-        $title   = esc_html( $post->post_title );
+        $title   = esc_html( $strip_unicode_controls( $post->post_title ) );
         $link    = esc_url( get_permalink( $post ) );
         $guid    = (int) $post->ID;
         $pubdate = esc_html( date( DATE_RSS, strtotime( $post->post_date ) ) );
