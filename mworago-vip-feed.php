@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Mworago VIP Feed
  * Description: RSS feed des articles privés (VIP) pour workflow n8n de traduction ES/PT
- * Version: 1.6
+ * Version: 1.7
  *
  * Déploiement :
  *   docker cp kpopify-vip-feed kpopify-wp:/var/www/html/wp-content/plugins/
