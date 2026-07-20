@@ -16,11 +16,9 @@ jobs:
 
       - name: Create zip
         run: |
-          mkdir -p dist
-          zip -r dist/mworago-vip-feed.zip . \
-            --exclude "*.git*" \
-            --exclude ".github/*" \
-            --exclude "dist/*"
+          mkdir -p dist build/mworago-vip-feed
+          rsync -a --exclude=".git*" --exclude=".github" --exclude="dist" --exclude="build" ./ build/mworago-vip-feed/
+          cd build && zip -r ../dist/mworago-vip-feed.zip mworago-vip-feed
 
       - name: Publish release
         uses: softprops/action-gh-release@v2
